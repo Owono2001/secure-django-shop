@@ -121,7 +121,7 @@ Here's a visual walkthrough of the platform's key areas:
 
 Check out a quick glimpse of the current functionality:
 
-![E-commerce Demo GIF](Video/demo.gif)
+https://github.com/user-attachments/assets/a4192d40-722b-452e-884d-edb9adf4283a
 
 ---
 

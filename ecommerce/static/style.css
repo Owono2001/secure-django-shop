@@ -1,0 +1,219 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Container */
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+/* Header */
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+header nav a:hover {
+    color: #ffcc00;
+    transform: scale(1.1);
+}
+
+/* Hero Section */
+.hero-section {
+    background: url('/static/images/hero-bg.jpg') no-repeat center center/cover;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    max-width: 600px;
+}
+
+/* Product Grid */
+#product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin: 20px 0;
+    animation: slideIn 1s ease-out;
+}
+
+.product-item {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: zoomIn 0.5s ease-in-out;
+}
+
+.product-item:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Product Image Animations */
+.product-item img {
+    max-width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.product-item img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* Search Bar */
+#search-bar {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    font-size: 1.2rem;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    transition: box-shadow 0.3s ease;
+}
+
+#search-bar:focus {
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px 10px;
+    background-color: #333;
+    color: white;
+    margin-top: 30px;
+    font-size: 0.9rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section {
+        height: 50vh;
+        padding: 0 15px;
+    }
+
+    .product-item img {
+        height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section h1 {
+        font-size: 1.5rem;
+    }
+
+    #search-bar {
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    .product-item h3 {
+        font-size: 1.2rem;
+    }
+}
+
+.secure-input {
+    border: 1px solid #ccc;
+    padding: 8px;
+    margin: 5px 0;
+    background: #f8f9fa;
+}

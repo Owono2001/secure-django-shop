@@ -1,0 +1,13 @@
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="secure-fields">
+        <label>Shipping Address:
+            <input type="text" name="address" required class="secure-input">
+        </label>
+        <label>Phone Number:
+            <input type="tel" name="phone_number" required class="secure-input">
+        </label>
+    </div>
+    <button type="submit">Place Order</button>
+</form>

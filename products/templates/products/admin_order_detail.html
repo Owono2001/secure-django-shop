@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Order Details</h3>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Customer</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order_items %}
+                    <tr>
+                        {% if forloop.first %}
+                            <td rowspan="{{ order_items|length }}">{{ order.id }}</td>
+                        {% endif %}
+                        <td>{{ item.product }}</td>
+                        <td>${{ item.price|floatformat:2 }}</td>
+                        {% if forloop.first %}
+                            <td rowspan="{{ order_items|length }}">{{ order.get_status_display }}</td>
+                            <td rowspan="{{ order_items|length }}">{{ order.user.username }}</td>
+                        {% endif %}
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.total|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer text-center">
+            <a href="{% url 'admin_order_list' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Orders
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

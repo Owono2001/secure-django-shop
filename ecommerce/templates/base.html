@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" data-theme-mode="default">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}E-Commerce Platform{% endblock %}</title>
+    
+    {% load static %}
+    
+    <!-- Quantum CSS Stack -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vibrant-mode.css' %}">
+
+    <!-- Advanced Animation Stack -->
+    <script src="{% static 'js/anime.min.js' %}"></script>
+    <script src="{% static 'js/gsap.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <!-- Quantum Performance Optimizer -->
+    <script>
+    if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').then(() => 
+            console.log('Quantum Service Worker engaged'));
+    }
+    </script>
+</head>
+
+<body class="default-mode">
+    <!-- Holographic Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="quantum-nav">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'homepage' %}">Pedro Shop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-danger" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-light" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-light" href="{% url 'signup' %}">Sign Up</a>
+                        </li>
+                    {% endif %}
+                    
+                    <!-- Quantum Theme Selector -->
+                    <li class="nav-item">
+                        <select id="mode-toggle" class="form-select ms-2 quantum-trigger" style="width: 200px;">
+                            <option value="default-mode">Standard Mode</option>
+                            <option value="vibrant-mode">Neon Spectrum</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Parallax Content Container -->
+    <div class="container mt-5 quantum-container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Holographic Footer -->
+    <footer class="bg-dark text-light text-center py-3 mt-5" id="quantum-footer">
+        <p>&copy; 2024 Pedro Shop. All rights reserved.</p>
+    </footer>
+
+    <!-- Quantum Theme Engine -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const themeSystem = {
+            elements: {
+                body: document.body,
+                nav: document.getElementById('quantum-nav'),
+                footer: document.getElementById('quantum-footer'),
+                container: document.querySelector('.quantum-container')
+            },
+            
+            init() {
+                this.loadTheme();
+                this.initObservers();
+                this.bindEvents();
+                this.initParticleField();
+            },
+
+            loadTheme() {
+                const savedTheme = localStorage.getItem("quantumTheme") || "default-mode";
+                this.applyTheme(savedTheme, false);
+                document.getElementById('mode-toggle').value = savedTheme;
+            },
+
+            applyTheme(theme, animate = true) {
+                const { body, nav, footer, container } = this.elements;
+                
+                // Quantum transition animation
+                if(animate) {
+                    gsap.to([body, nav, footer, container], {
+                        duration: 0.8,
+                        opacity: 0,
+                        y: 20,
+                        ease: "power4.inOut",
+                        onComplete: () => this.updateThemeClasses(theme)
+                    });
+                } else {
+                    this.updateThemeClasses(theme);
+                }
+            },
+
+            updateThemeClasses(theme) {
+                const { body, nav, footer } = this.elements;
+                const isVibrant = theme === 'vibrant-mode';
+                
+                // Quantum class management
+                body.className = theme;
+                nav.classList.toggle('vibrant-mode', isVibrant);
+                footer.classList.toggle('vibrant-mode', isVibrant);
+                
+                // Particle field activation
+                document.querySelectorAll('.particle').forEach(p => 
+                    p.classList.toggle('active', isVibrant));
+
+                // Post-transition animation
+                gsap.fromTo([body, nav, footer, this.elements.container], 
+                    { opacity: 0, y: -20 },
+                    { duration: 1, opacity: 1, y: 0, ease: "elastic.out(1, 0.3)" }
+                );
+
+                localStorage.setItem("quantumTheme", theme);
+            },
+
+            initObservers() {
+                new MutationObserver(mutations => {
+                    mutations.forEach(mutation => {
+                        if(mutation.attributeName === 'class') {
+                            this.handleThemeChange();
+                        }
+                    });
+                }).observe(document.body, { attributes: true });
+            },
+
+            bindEvents() {
+                document.getElementById('mode-toggle').addEventListener('change', e => {
+                    this.applyTheme(e.target.value);
+                });
+            },
+
+            handleThemeChange() {
+                const theme = document.body.className;
+                document.querySelectorAll('.quantum-trigger').forEach(el => 
+                    el.classList.toggle('vibrant-trigger', theme === 'vibrant-mode'));
+            },
+
+            initParticleField() {
+                // Quantum particle initialization
+                if(typeof QuantumParticles !== 'undefined') {
+                    new QuantumParticles({
+                        selector: '.quantum-container',
+                        density: 'high',
+                        mode: localStorage.getItem("quantumTheme")
+                    });
+                }
+            }
+        };
+
+        themeSystem.init();
+    });
+    </script>
+
+    <!-- Bootstrap Quantum Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Quantum Physics Engine -->
+    <script src="{% static 'js/quantum-physics.js' %}"></script>
+</body>
+</html>

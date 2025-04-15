@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5" style="min-height: 100vh;">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1>Welcome, {{ user.username }}</h1>
+            <p><strong>Role:</strong> {{ user.role|capfirst }}</p>
+        </div>
+    </div>
+
+    <!-- Date Filter Form -->
+    <form method="get" class="date-filters mb-4">
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <label for="start_date">Start Date:</label>
+          <input type="date" name="start_date" id="start_date" class="form-control">
+        </div>
+        <div class="col-md-3">
+          <label for="end_date">End Date:</label>
+          <input type="date" name="end_date" id="end_date" class="form-control">
+        </div>
+        <div class="col-md-2 align-self-end">
+          <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Statistics Section with Colored Cards -->
+    {% if statistics %}
+    <div class="row mb-5">
+        <div class="col-md-2">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total Users</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ statistics.total_users }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Merchants</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ statistics.total_merchants }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Customers</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ statistics.total_customers }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Total Orders</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ statistics.total_orders }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Total Products</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ statistics.total_products }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p class="text-center">Statistics not available.</p>
+    {% endif %}
+
+    <!-- Recent Orders Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">Recent Orders</h2>
+            {% if recent_orders %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover shadow-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Order ID</th>
+                            <th>User</th>
+                            <th>Total Price</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in recent_orders %}
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.user.username }}</td>
+                            <td>${{ order.total_price }}</td>
+                            <td>{{ order.get_status_display }}</td>
+                            <td>{{ order.created_at|date:"F j, Y, g:i a" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-center">No recent orders.</p>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Sales Chart Section -->
+    <div class="mt-5 mb-5">
+        <h3 class="text-center mb-4">Sales Over Time</h3>
+        <div id="curve_chart" style="width: 100%; height: 500px;"></div>
+    </div>
+    
+    <!-- User Management Section -->
+    <div class="mt-5">
+        <h3 class="text-center mb-4">System Users</h3>
+        {% if users %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover shadow-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Date Joined</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.get_role_display }}</td>
+                        <td>{{ user.date_joined|date:"F j, Y, g:i a" }}</td>
+                        <td>
+                            <a href="{% url 'edit_user' user.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                            <form method="post" action="{% url 'delete_user' user.pk %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-center">No users found.</p>
+        {% endif %}
+    </div>
+    
+    <!-- Back to Homepage Button -->
+    <div class="text-center mt-5">
+        <a href="{% url 'homepage' %}" class="btn btn-outline-secondary">Back to Homepage</a>
+    </div>
+</div>
+
+<!-- Google Charts Script -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        const data = google.visualization.arrayToDataTable([
+            ['Month', 'Sales'],
+            ['January', 100],
+            ['February', 120],
+            ['March', 130],
+            ['April', 150],
+            ['May', 170]
+        ]);
+
+        const options = {
+            title: 'Sales Over Time',
+            curveType: 'function',
+            legend: { position: 'bottom' },
+            backgroundColor: '#f9f9f9',
+            chartArea: { width: '80%', height: '70%' }
+        };
+
+        const chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        chart.draw(data, options);
+    }
+</script>
+{% endblock %}

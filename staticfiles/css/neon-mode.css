@@ -1,0 +1,70 @@
+/* Neon Mode */
+body.neon-mode {
+    background-color: #141414;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar.neon-mode {
+    background-color: #1e1e1e;
+    border-bottom: 3px solid #00ffcc;
+}
+
+.navbar-brand {
+    color: #00ffcc;
+    font-size: 1.8rem;
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #00ffcc;
+}
+
+.card {
+    background-color: #1e1e1e;
+    border: 1px solid #00ffcc;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 255, 204, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 255, 204, 0.8);
+}
+
+.card-title {
+    color: #00ffcc;
+    font-size: 1.5rem;
+}
+
+.card-text {
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.btn {
+    background-color: #00ffcc;
+    color: #141414;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #009977;
+    color: #ffffff;
+}
+
+footer {
+    background-color: #1e1e1e;
+    color: #00ffcc;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+}

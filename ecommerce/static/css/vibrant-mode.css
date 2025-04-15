@@ -1,0 +1,158 @@
+/* vibrant-mode.css */
+:root {
+    --neon-primary: #ff6f61;
+    --neon-secondary: #ff9a9e;
+    --neon-accent: #fbc2eb;
+    --neon-glow: 0 0 15px var(--neon-primary);
+  }
+  
+  body.vibrant-mode {
+    animation: fractalFlow 30s infinite linear, fadeIn 1s ease-in-out;
+    background: 
+      radial-gradient(circle at 10% 20%, var(--neon-secondary) 0%, transparent 30%),
+      radial-gradient(circle at 90% 80%, var(--neon-accent) 0%, transparent 30%),
+      linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #fbc2eb 100%);
+    background-size: 400% 400%;
+    color: #fff;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-x: hidden;
+    perspective: 1000px;
+  }
+  
+  @keyframes fractalFlow {
+    0% { background-position: 0% 0%, 100% 100%, 0 0; }
+    50% { background-position: 100% 100%, 0% 0%, 100% 100%; }
+    100% { background-position: 0% 0%, 100% 100%, 0 0; }
+  }
+  
+  body.vibrant-mode::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, 
+      rgba(255,111,97,0.1) 0%, 
+      transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+    animation: plasmaPulse 15s infinite alternate;
+  }
+  
+  @keyframes plasmaPulse {
+    from { transform: scale(1); opacity: 0.3; }
+    to { transform: scale(1.5); opacity: 0.7; }
+  }
+  
+  /* Advanced Component Styling */
+  .vibrant-mode .navbar,
+  .vibrant-mode .footer {
+    background: linear-gradient(45deg, 
+      var(--neon-primary), 
+      var(--neon-accent)) !important;
+    box-shadow: var(--neon-glow);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .vibrant-mode .navbar::before,
+  .vibrant-mode .footer::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg,
+      transparent 25%,
+      rgba(255,255,255,0.1) 50%,
+      transparent 75%);
+    transform: rotate(45deg);
+    animation: matrixFlow 3s infinite linear;
+  }
+  
+  @keyframes matrixFlow {
+    0% { transform: rotate(45deg) translateX(0%); }
+    100% { transform: rotate(45deg) translateX(50%); }
+  }
+  
+  .vibrant-mode .card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255,255,255,0.15);
+    box-shadow: 
+      0 0 30px rgba(255,105,135,0.3),
+      0 10px 40px rgba(0,0,0,0.2);
+    transform-style: preserve-3d;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .vibrant-mode .card:hover {
+    transform: 
+      translateY(-10px) 
+      rotateX(5deg) 
+      rotateY(5deg)
+      scale(1.02);
+    box-shadow: 
+      0 0 50px rgba(255,105,135,0.5),
+      0 15px 60px rgba(0,0,0,0.3);
+  }
+  
+  .vibrant-mode button {
+    background: linear-gradient(45deg,
+      var(--neon-primary),
+      var(--neon-accent));
+    border: 2px solid rgba(255,255,255,0.2);
+    padding: 1rem 2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(var(--neon-glow));
+  }
+  
+  .vibrant-mode button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg,
+      transparent 25%,
+      rgba(255,255,255,0.2) 50%,
+      transparent 75%);
+    transform: rotate(45deg);
+    animation: quantumShimmer 2s infinite linear;
+  }
+  
+  @keyframes quantumShimmer {
+    0% { transform: rotate(45deg) translateX(-100%); }
+    100% { transform: rotate(45deg) translateX(100%); }
+  }
+
+/* Add these to vibrant-mode.css */
+.quantum-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.webgl-warning {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+}
+
+.vibrant-mode .particle {
+    mix-blend-mode: screen;
+    filter: drop-shadow(0 0 5px rgba(255,111,97,0.5));
+}
+
+.vibrant-mode .quantum-container {
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(5px);
+}

@@ -1,0 +1,49 @@
+/* Vibrant Mode Animation */
+body.vibrant-mode {
+    animation: fadeIn 1s ease-in-out;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #fbc2eb 100%);
+    color: #fff;
+    transition: all 0.5s ease-in-out;
+}
+
+.navbar.vibrant-mode {
+    background-color: #ff6f61 !important;
+    color: #fff;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.footer.vibrant-mode {
+    background-color: #ff6f61 !important;
+    color: #fff !important;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.card.vibrant-mode {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    box-shadow: 0 4px 15px rgba(255, 105, 135, 0.3);
+    transition: all 0.5s ease-in-out;
+}
+
+button.vibrant-mode {
+    background-color: #ff6f61;
+    border: none;
+    color: #fff;
+    transition: background-color 0.5s ease-in-out;
+}
+
+a.vibrant-mode {
+    color: #fff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: color 0.5s ease-in-out;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

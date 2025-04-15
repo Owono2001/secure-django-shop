@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Write Review for {{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Product Details -->
+        <div class="col-md-6">
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <p class="text-primary">Price: ${{ product.price }}</p>
+            <p>Stock: {{ product.stock }}</p>
+        </div>
+    </div>
+
+    <!-- Review Form -->
+    <div class="mt-5">
+        <h3 class="mb-4">Write a Review</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+    </div>
+
+    <!-- Display Existing Reviews -->
+    <div class="mt-5">
+        <h3>Customer Reviews</h3>
+        {% if product.reviews.exists %}
+            <ul class="list-group">
+                {% for review in product.reviews.all %}
+                    <li class="list-group-item">
+                        <p><strong>{{ review.user.username }}</strong>: {{ review.content }}</p>
+                        <p>Rating: <span class="badge bg-warning text-dark">{{ review.rating }}</span></p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">No reviews yet. Be the first to review this product!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+{% load socialaccount %}  <!-- ADD THIS to load the provider_login_url tag -->
+
+{% block title %}Welcome to Pedro Shop{% endblock %}
+
+{% block content %}
+<div class="hero-section text-center text-light p-5"
+     style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('{% static "images/hero-bg.jpg" %}') no-repeat center; 
+            background-size: cover; font-family: 'Poppins', sans-serif;">
+    <h1 style="font-size: 4rem; color: #ffd700; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
+        Welcome to Pedro Shop
+    </h1>
+    <p style="font-size: 1.8rem; color: #ffffff; text-shadow: 1px 1px 3px rgba(0,0,0,0.7);">
+        Discover amazing products and deals
+    </p>
+
+    <!-- Start Shopping Button (Conditional Based on Authentication) -->
+    {% if user.is_authenticated %}
+        <a href="{% url 'product_list' %}" class="btn btn-warning btn-lg mt-3 shadow-lg px-4 py-2" style="font-size: 1.5rem;">
+            Start Shopping
+        </a>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn btn-warning btn-lg mt-3 shadow-lg px-4 py-2" style="font-size: 1.5rem;">
+            Start Shopping
+        </a>
+        <p class="text-warning mt-2" style="font-weight: bold;">You need to log in to access products.</p>
+    {% endif %}
+    
+    <!-- Login Button -->
+    {% if not user.is_authenticated %}
+        <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg mt-3 ms-3 shadow-lg px-4 py-2" style="font-size: 1.5rem;">
+            Login
+        </a>
+
+        <!-- Sign in with Google Button -->
+        <a href="{% provider_login_url 'google' %}"
+           class="btn btn-danger btn-lg mt-3 ms-3 shadow-lg px-4 py-2"
+           style="font-size: 1.5rem;">
+            <i class="fab fa-google"></i> Sign in with Google
+        </a>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block featured %}
+<div class="container mt-5">
+    <!-- Top Categories Section -->
+    <h2 class="text-center mb-4" style="font-family: 'Roboto', sans-serif; font-size: 2.5rem; color: #4e54c8;">
+        Top Categories
+    </h2>
+    <div class="row">
+        {% for category in categories %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg" style="border: none; border-radius: 15px;">
+                <img src="https://via.placeholder.com/400" class="card-img-top" alt="{{ category.name }}" 
+                     style="border-radius: 15px 15px 0 0; height: 200px; object-fit: cover;">
+                <div class="card-body text-center" style="background-color: #f1f1f1;">
+                    <h5 class="card-title" style="font-size: 1.5rem; color: #007bff;">{{ category.name }}</h5>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'product_list' %}?category={{ category.name }}"
+                           class="btn btn-outline-primary px-4 py-2" style="font-size: 1.2rem;">
+                            Explore {{ category.name }}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}"
+                           class="btn btn-outline-primary px-4 py-2" style="font-size: 1.2rem;">
+                            Explore {{ category.name }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-danger">No categories available.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Featured Products Section -->
+    <h2 class="text-center mt-5 mb-4"
+        style="font-family: 'Roboto', sans-serif; font-size: 2.5rem; color: #28a745;">
+        Featured Products
+    </h2>
+    <div class="row">
+        {% for product in featured_products %}
+        <div class="col-md-4 mb-4 fade-in">
+            <div class="card shadow-lg" style="border: none; border-radius: 15px;">
+                <img src="https://via.placeholder.com/300" class="card-img-top zoomable-img" alt="{{ product.name }}" 
+                     style="border-radius: 15px 15px 0 0; height: 200px; object-fit: cover;">
+                <div class="card-body" style="background-color: #f8f9fa;">
+                    <h5 class="card-title" style="font-size: 1.5rem; color: #333;">{{ product.name }}</h5>
+                    <p class="card-text" style="color: #28a745; font-size: 1.2rem; font-weight: bold;">
+                        ${{ product.price }}
+                    </p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'product_detail' product.pk %}"
+                           class="btn btn-outline-primary px-4 py-2" style="font-size: 1.2rem;">
+                            View Details
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-outline-primary px-4 py-2" style="font-size: 1.2rem;">
+                            View Details
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-danger">No products to display.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Dashboard or Login -->
+    <div class="text-center mt-5">
+        {% if user.is_authenticated %}
+            {% if user.role == 'admin' %}
+                <a href="{% url 'admin_dashboard' %}"
+                   class="btn btn-secondary shadow-lg px-5 py-2"
+                   style="font-size: 1.5rem;">
+                    Admin Dashboard
+                </a>
+            {% elif user.role == 'merchant' %}
+                <a href="{% url 'merchant_dashboard' %}"
+                   class="btn btn-secondary shadow-lg px-5 py-2"
+                   style="font-size: 1.5rem;">
+                    Merchant Dashboard
+                </a>
+            {% elif user.role == 'customer' %}
+                <a href="{% url 'customer_dashboard' %}"
+                   class="btn btn-secondary shadow-lg px-5 py-2"
+                   style="font-size: 1.5rem;">
+                    Customer Dashboard
+                </a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'login' %}"
+               class="btn btn-secondary shadow-lg px-5 py-2"
+               style="font-size: 1.5rem;">
+                Login to Access Dashboard
+            </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block title %}Login | Pedro Shop{% endblock %}
+
+{% block content %}
+<div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="row justify-content-center w-100">
+        <div class="col-lg-7 col-md-9 col-sm-10">
+            <div class="card shadow-lg border-0" style="border-radius: 15px; width: 100%; max-width: 700px;">
+                <div class="card-header text-light text-center" style="background-color: #4e54c8; border-radius: 15px 15px 0 0;">
+                    <h4 style="font-family: 'Poppins', sans-serif; font-size: 2.5rem;">Welcome Back</h4>
+                    <p style="font-size: 1.5rem; font-family: 'Roboto', sans-serif;">
+                        Login to continue exploring amazing deals!
+                    </p>
+                </div>
+                <div class="card-body" style="background-color: #f8f9fa;">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} mt-2">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <!-- Username Field -->
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label" style="font-size: 1.2rem; font-weight: bold; color: #343a40;">
+                                Username
+                            </label>
+                            {{ form.username }}
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-3">
+                            <label for="id_password" class="form-label" style="font-size: 1.2rem; font-weight: bold; color: #343a40;">
+                                Password
+                            </label>
+                            {{ form.password }}
+                        </div>
+
+                        <!-- CAPTCHA Field (If Applicable) -->
+                        {% if form.captcha %}
+                        <div class="mb-3">
+                            <label for="id_captcha" class="form-label" style="font-size: 1.2rem; font-weight: bold; color: #343a40;">
+                                CAPTCHA
+                            </label>
+                            {{ form.captcha }}
+                        </div>
+                        {% endif %}
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary w-100 mt-4" 
+                                style="background-color: #4e54c8; border: none; font-size: 1.5rem; padding: 15px;">
+                            Login
+                        </button>
+                    </form>
+
+                    <!-- Forgot Password Link (If user had a failed attempt) -->
+                    {% if failed_login %}
+                        <p style="margin-top: 1em;">
+                            <a href="{% url 'forgot_password' %}">Forgot your password?</a>
+                        </p>
+                    {% endif %}
+
+                    <!-- No Account? Register -->
+                    <div class="text-center mt-4">
+                        <p style="font-size: 1.5rem; font-weight: bold; color: #4e54c8;">
+                            Don't have an account?
+                            <a href="{% url 'register' %}" class="text-primary" 
+                               style="text-decoration: underline; font-size: 1.5rem; font-weight: bold;">
+                                Register
+                            </a>
+                        </p>
+                    </div>
+
+                    <!-- Merchant Login Link -->
+                    <div class="text-center mt-4">
+                        <p style="font-size: 1.5rem; font-weight: bold; color: #4e54c8;">
+                            Are you a merchant? 
+                            <a href="{% url 'merchant_login' %}" class="text-primary" 
+                               style="text-decoration: underline; font-size: 1.5rem; font-weight: bold;">
+                                Login Here
+                            </a>
+                        </p>
+                    </div>
+
+                    <!-- Admin (Django) Login Link -->
+                    <div class="text-center mt-4">
+                        <p style="font-size: 1.5rem; font-weight: bold; color: #4e54c8;">
+                            Admin Access?
+                            <!-- This links to Django's built-in admin index -->
+                            <a href="{% url 'admin:index' %}" class="text-primary" 
+                               style="text-decoration: underline; font-size: 1.5rem; font-weight: bold;">
+                                Go to Admin Login
+                            </a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<!-- Custom styles for the profile page -->
+<style>
+  /* Container with a light background and padding */
+  .profile-container {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+  }
+  /* Customized card with a subtle gradient and shadow */
+  .profile-card {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  /* Heading styles for a darker, more visible title */
+  .profile-card h2 {
+    color: #343a40;
+    margin-bottom: 20px;
+  }
+  /* Paragraph styles for better readability */
+  .profile-card p {
+    font-size: 1.1rem;
+    color: #495057;
+  }
+  /* Bold text styling for labels */
+  .profile-card p strong {
+    color: #212529;
+  }
+  /* Button styling to match the overall color theme */
+  .profile-card .btn {
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+  .profile-card .btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<div class="container mt-5 profile-container">
+  <div class="card profile-card p-4">
+    <h2>My Profile</h2>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Mobile Number:</strong> {{ user.mobile_number }}</p>
+    <p><strong>First Name:</strong> {{ user.first_name }}</p>
+    <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+    <p><strong>Role:</strong> {{ user.role|capfirst }}</p>
+    <p><strong>Date Joined:</strong> {{ user.date_joined|date:"F j, Y, g:i a" }}</p>
+    <a href="{% url 'account_settings' %}" class="btn btn-primary">Edit Account Settings</a>
+  </div>
+</div>
+{% endblock %}

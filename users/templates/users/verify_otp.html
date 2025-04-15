@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Verify OTP{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Verify OTP</h2>
+  <p>Please enter the OTP sent to your email and set a new password.</p>
+  
+  <form method="post">
+    {% csrf_token %}
+    <input type="text" name="otp_code" placeholder="Enter OTP" required>
+    <input type="password" name="new_password" placeholder="Enter New Password" required>
+    <button type="submit" class="btn btn-success">Verify OTP & Reset Password</button>
+  </form>
+</div>
+{% endblock %}

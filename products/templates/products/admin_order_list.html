@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Order List</title>
+</head>
+<body>
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'dashboard' %}" style="
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+        ">🏠 Back to Dashboard</a>
+    </div>
+    
+    <h1>Order List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.user.username }}</td>
+                <!-- To -->
+                <td>{{ order.masked_address }}</td>
+                <td>{{ order.masked_phone }}</td>
+                <td>{{ order.total_price }}</td>
+                <td>{{ order.get_status_display }}</td>
+                <td>
+                    <a href="{% url 'admin_order_detail' order.id %}">View</a> |
+                    <a href="{% url 'admin_order_edit' order.id %}">Edit</a> |
+                    <a href="{% url 'admin_order_delete' order.id %}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+

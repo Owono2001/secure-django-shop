@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Merchant Products{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Your Products</h1>
+    <a href="{% url 'add_product' %}" class="btn btn-success mb-4">Add New Product</a>
+    
+    {% if products %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.created_at }}</td>
+                <td>
+                    <a href="{% url 'edit_product' product.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'delete_product' product.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-center">No products added yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

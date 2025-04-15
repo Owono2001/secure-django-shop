@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Product List{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Product Management</h1>
+
+    {% if products %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Available</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category.name }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.stock }}</td>
+                <td>{{ product.available }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No products available.</p>
+    {% endif %}
+</div>
+{% endblock %}

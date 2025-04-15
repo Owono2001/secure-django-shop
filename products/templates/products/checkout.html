@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-success text-white text-center">
+                    <h2 class="fw-bold">Secure Checkout</h2>
+                </div>
+                <div class="card-body bg-light">
+                    <!-- Your Order -->
+                    <h3 class="text-dark fw-bold">Your Order</h3>
+                    <table class="table table-hover table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="fw-bold">Product</th>
+                                <th class="fw-bold">Price</th>
+                                <th class="fw-bold">Quantity</th>
+                                <th class="fw-bold">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart %}
+                            <tr>
+                                <td class="fw-bold">{{ item.product.name }}</td>
+                                <td class="fw-bold">${{ item.price }}</td>
+                                <td class="fw-bold">{{ item.quantity }}</td>
+                                <td class="fw-bold">${{ item.total_price }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center fw-bold">Your cart is empty.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <!-- Total Price -->
+                    <p class="text-end fw-bold text-dark"><strong>Total Price:</strong> ${{ cart.get_total_price }}</p>
+
+                    <!-- Billing Details -->
+                    <h3 class="mt-4 text-dark fw-bold">Billing Details</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        <!-- Address Field -->
+                        <div class="mb-3">
+                            <label for="address" class="form-label fw-bold text-dark">Address</label>
+                            <input type="text" id="address" name="address" class="form-control" placeholder="Enter your address">
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="mb-3">
+                            <label for="phone_number" class="form-label fw-bold text-dark">Phone Number</label>
+                            <input type="text" id="phone_number" name="phone_number" class="form-control" placeholder="Enter your phone number">
+                        </div>
+
+                        <!-- Payment Method -->
+                        <p class="fw-bold text-dark">Payment Method</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payment_method" id="credit_card" value="credit_card">
+                            <label class="form-check-label fw-bold text-dark" for="credit_card">Credit Card</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payment_method" id="paypal" value="paypal">
+                            <label class="form-check-label fw-bold text-dark" for="paypal">PayPal</label>
+                        </div>
+
+                        <!-- Place Order Button -->
+                        <button type="submit" class="btn btn-success w-100 mt-3 fw-bold">Place Order</button>
+                    </form>
+
+                    <!-- Back to Cart Button -->
+                    <div class="text-center mt-3">
+                        <a href="{% url 'cart_detail' %}" class="btn btn-outline-secondary fw-bold">Back to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Order History{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Order History</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Total Price</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.created_at|date:"F j, Y, g:i a" }}</td>
+                    <td>${{ order.total_price }}</td>
+                    <td>{{ order.status }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No orders found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Back to Dashboard Button -->
+    <div class="text-center mt-4">
+        <a href="{% url 'customer_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}
